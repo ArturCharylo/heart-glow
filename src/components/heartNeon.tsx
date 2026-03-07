@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/heartNeon.css';
+import heartImg from '../assets/heartNeon.png';
 
 interface HeartNeonProps {
   onActivated: () => void;
@@ -11,26 +12,23 @@ const HeartNeon: React.FC<HeartNeonProps> = ({ onActivated }) => {
   const handleHeartClick = () => {
     if (!isActive) {
       setIsActive(true);
-      // Notify parent component to show the rest of the page
+      // Wait for the clip-path animation to finish before revealing the page
       setTimeout(() => {
         onActivated();
-      }, 2000); // Matches the animation duration
+      }, 1500); 
     }
   };
 
   return (
-    <div className={`heart-container ${isActive ? 'active' : ''}`} onClick={handleHeartClick}>
-      <svg
-        viewBox="0 0 100 100"
-        className="heart-svg"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {/* Main Heart Path */}
-        <path
-          className="heart-outline"
-          d="M50,88 L45,83 C25,65 10,50 10,33 C10,20 20,10 33,10 C41,10 47,14 50,19 C53,14 59,10 67,10 C80,10 90,20 90,33 C90,50 75,65 55,83 L50,88 Z"
-        />
-      </svg>
+    <div className={`heart-wrapper ${isActive ? 'active' : ''}`} onClick={handleHeartClick}>
+      {/* Base layer - the "dimmed" state */}
+      <img src={heartImg} className="heart-image base" alt="Heart Off" />
+      
+      {/* Top layer - the "glowing" state that gets revealed */}
+      <div className="glow-container">
+        <img src={heartImg} className="heart-image neon" alt="Heart On" />
+      </div>
+
       {!isActive && <p className="hint-text">Click to ignite</p>}
     </div>
   );
