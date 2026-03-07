@@ -4,14 +4,19 @@ import heartImg from '../assets/heartNeon.png';
 
 interface HeartNeonProps {
   onActivated: () => void;
+  onIgnite?: () => void;
 }
 
-const HeartNeon: React.FC<HeartNeonProps> = ({ onActivated }) => {
+const HeartNeon: React.FC<HeartNeonProps> = ({ onActivated, onIgnite }) => {
   const [isActive, setIsActive] = useState(false);
 
   const handleHeartClick = () => {
     if (!isActive) {
       setIsActive(true);
+      // Trigger the ignition effect immediately
+      if (onIgnite) {
+        onIgnite();
+      }
       // Wait for the clip-path animation to finish before revealing the page
       setTimeout(() => {
         onActivated();
