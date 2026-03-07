@@ -6,12 +6,15 @@ function App() {
   const [showContent, setShowContent] = useState(false);
 
   return (
-    <div className="app-wrapper">
+    <div className={`app-wrapper ${showContent ? 'ignited' : ''}`}>
+      {/* Background container for the animated flames glow */}
+      <div className="bg-flames"></div>
+      
       <HeartNeon onActivated={() => setShowContent(true)} />
 
       <main className={`main-content ${showContent ? 'visible' : ''}`}>
         <header>
-          <h1>PIĘKNY SYF</h1>
+          <h1 className="pulsating-text">PIĘKNY SYF</h1>
           <nav>
             <ul>
               <li>Gallery</li>
