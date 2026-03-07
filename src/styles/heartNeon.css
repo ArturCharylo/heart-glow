@@ -13,95 +13,126 @@
   transform: scale(1.03);
 }
 
-.heart-image {
+.heart-svg {
   width: 100%;
+  height: auto;
   display: block;
-}
-
-/* Off state: Dark and grayscale */
-.heart-image.base {
-  filter: brightness(0.15) grayscale(1);
+  /* Base SVG style (dark/dimmed) */
+  filter: brightness(0.3) grayscale(1);
   transition: filter 0.5s ease;
 }
 
-/* Container for the glowing layer */
-.glow-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  /* Hidden at the start - clipped from bottom to 100% */
-  clip-path: inset(100% 0 0 0);
+/* Style for SVG elements inside the SVG */
+.heart-svg .flame {
+  fill: none;
+  stroke: #222; /* Dark line when unignited */
+  stroke-width: 4;
 }
 
-/* On state: Bright colors and glow */
-.heart-image.neon {
-  filter: brightness(1.2) drop-shadow(0 0 15px #0096ff) drop-shadow(0 0 30px #0096ff);
+.heart-svg .heart-path {
+  fill: none;
+  stroke: #222; /* Dark line when unignited */
+  stroke-width: 6;
 }
 
-/* Activation animation */
-.heart-wrapper.active .glow-container {
-  animation: igniteEffect 1.5s forwards ease-in-out;
+.heart-svg .neon-text {
+  fill: none;
+  stroke: #222; /* Dark line when unignited */
+  stroke-width: 2;
+  font-family: inherit;
+  font-size: 80px;
+  font-weight: bold;
+  letter-spacing: 5px;
 }
 
-.heart-wrapper.active .heart-image.neon {
-  /* Chain the initial ignite flicker with a continuous living fire effect */
-  animation: igniteFlicker 1.5s forwards ease-in-out, flicker 3s infinite alternate ease-in-out 1.5s;
+/* Ignited state for the SVG */
+.heart-svg.ignited {
+  /* Remove grayscale and brighten up slightly as base for the ignition effect */
+  filter: brightness(1.2);
+  /* Use the neon-glow filter defined in the SVG */
+  filter: url(#neon-glow) drop-shadow(0 0 15px #0096ff) drop-shadow(0 0 30px #0096ff);
+  /* Start ignition and continuous flame animations */
+  animation: igniteSvg 1.5s forwards ease-in-out, svgFlicker 3s infinite alternate ease-in-out 1.5s;
 }
 
-.heart-wrapper.active .heart-image.base {
-  filter: brightness(0.4) blur(1px);
+/* When ignited, turn the SVG lines bright blue */
+.heart-svg.ignited .flame,
+.heart-svg.ignited .heart-path,
+.heart-svg.ignited .neon-text {
+  stroke: #0096ff;
 }
 
-@keyframes igniteEffect {
+/* Path animation specifically for the flames to look like drawing/burning fire */
+.heart-svg.ignited .flame {
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: drawFlame 1.5s forwards ease-in-out, flamePulse 2s infinite alternate ease-in-out 1.5s;
+}
+
+.heart-svg.ignited .heart-path {
+  stroke-dasharray: 2500;
+  stroke-dashoffset: 2500;
+  animation: drawFlame 1.5s forwards ease-out;
+}
+
+.heart-svg.ignited .neon-text {
+  animation: textNeonPulse 2.5s infinite alternate ease-in-out 1.5s;
+}
+
+/* Ignite effect for the whole SVG */
+@keyframes igniteSvg {
   0% {
-    clip-path: inset(100% 0 0 0);
-  }
-  100% {
-    clip-path: inset(0% 0 0 0);
-  }
-}
-
-/* Initial strong burst of light when igniting */
-@keyframes igniteFlicker {
-  0% {
-    filter: brightness(0.8) drop-shadow(0 0 5px #0096ff);
+    filter: brightness(0.5) grayscale(1);
     transform: scale(0.98);
   }
   50% {
-    filter: brightness(1.5) drop-shadow(0 0 25px #0096ff) drop-shadow(0 0 50px #0096ff);
+    filter: brightness(1.8) drop-shadow(0 0 30px #0096ff) drop-shadow(0 0 60px #0096ff) url(#neon-glow);
     transform: scale(1.05);
   }
   100% {
-    filter: brightness(1.2) drop-shadow(0 0 15px #0096ff) drop-shadow(0 0 30px #0096ff);
+    filter: brightness(1.2) drop-shadow(0 0 15px #0096ff) drop-shadow(0 0 30px #0096ff) url(#neon-glow);
     transform: scale(1);
   }
 }
 
-/* Continuous "living fire" flicker effect */
-@keyframes flicker {
+/* Flicker effect for the whole SVG */
+@keyframes svgFlicker {
   0% {
-    filter: brightness(1.2) drop-shadow(0 0 15px #0096ff) drop-shadow(0 0 30px #0096ff);
-    transform: scale(1) skew(0deg);
+    filter: brightness(1.2) drop-shadow(0 0 15px #0096ff) drop-shadow(0 0 30px #0096ff) url(#neon-glow);
+    transform: scale(1);
   }
-  25% {
-    filter: brightness(1.1) drop-shadow(0 0 10px #0080ff) drop-shadow(0 0 20px #0080ff);
-    transform: scale(0.99) skew(-0.5deg);
+  33% {
+    filter: brightness(1.1) drop-shadow(0 0 10px #0080ff) drop-shadow(0 0 20px #0080ff) url(#neon-glow);
+    transform: scale(0.995);
   }
-  50% {
-    filter: brightness(1.3) drop-shadow(0 0 20px #00aaff) drop-shadow(0 0 40px #00aaff);
-    transform: scale(1.01) skew(0.5deg);
-  }
-  75% {
-    filter: brightness(1.15) drop-shadow(0 0 12px #0096ff) drop-shadow(0 0 25px #0096ff);
-    transform: scale(1) skew(-0.2deg);
+  66% {
+    filter: brightness(1.3) drop-shadow(0 0 20px #00aaff) drop-shadow(0 0 40px #00aaff) url(#neon-glow);
+    transform: scale(1.005);
   }
   100% {
-    filter: brightness(1.25) drop-shadow(0 0 18px #0096ff) drop-shadow(0 0 35px #0096ff);
-    transform: scale(1.005) skew(0.2deg);
+    filter: brightness(1.2) drop-shadow(0 0 15px #0096ff) drop-shadow(0 0 30px #0096ff) url(#neon-glow);
+    transform: scale(1);
   }
+}
+
+/* Animation to trace the paths like growing fire */
+@keyframes drawFlame {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Subtle pulsating specifically for the inner flames */
+@keyframes flamePulse {
+  0% { stroke-width: 4; stroke: #0096ff; }
+  50% { stroke-width: 5; stroke: #00bfff; }
+  100% { stroke-width: 4; stroke: #0096ff; }
+}
+
+/* Subtle pulsing for the SVG text to glow */
+@keyframes textNeonPulse {
+  0% { stroke-width: 2; opacity: 0.9; }
+  100% { stroke-width: 3; opacity: 1; stroke: #00bfff; }
 }
 
 .hint-text {
