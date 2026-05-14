@@ -1,18 +1,22 @@
 .heart-wrapper {
   position: relative;
-  width: 350px; /* Adjust size to your liking */
-  height: auto;
+  width: 50vw;
+  max-width: 500px;
+  min-width: 250px;
   cursor: pointer;
-  transition: transform 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+  z-index: 10;
 }
 
 .heart-wrapper:hover {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
+.heart-svg {
 .heart-svg {
   width: 100%;
   height: auto;
@@ -137,14 +141,14 @@
 
 .hint-text {
   color: #555;
-  margin-top: 1.5rem;
-  font-size: 0.75rem;
+  margin-top: 2rem;
+  font-size: 1rem;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  animation: pulse 2s infinite;
+  letter-spacing: 5px;
+  animation: pulseHint 2s infinite;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.4; }
+@keyframes pulseHint {
+  0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
 }

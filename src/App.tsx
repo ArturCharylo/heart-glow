@@ -15,7 +15,7 @@ function App() {
 
       <main className={`main-content ${showContent ? 'visible' : ''}`}>
         <header>
-          <h1>PIĘKNY SYF</h1>
+          <h1 className="pulsating-text">PIĘKNY SYF</h1>
           <nav>
             <ul>
               <li>Gallery</li>

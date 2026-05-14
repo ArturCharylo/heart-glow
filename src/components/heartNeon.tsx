@@ -19,7 +19,7 @@ const HeartNeon: React.FC<HeartNeonProps> = ({ onActivated, onIgnite }) => {
       // Wait for the ignition animation to finish before revealing the page
       setTimeout(() => {
         onActivated();
-      }, 1500); 
+      }, 2500); 
     }
   };
 
