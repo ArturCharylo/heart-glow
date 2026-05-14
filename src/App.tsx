@@ -4,13 +4,14 @@ import './styles/App.css';
 
 function App() {
   const [showContent, setShowContent] = useState(false);
+  const [isIgnited, setIsIgnited] = useState(false);
 
   return (
-    <div className={`app-wrapper ${showContent ? 'ignited' : ''}`}>
-      {/* Background container for the animated flames glow */}
-      <div className="bg-flames"></div>
-      
-      <HeartNeon onActivated={() => setShowContent(true)} />
+    <div className={`app-wrapper ${isIgnited ? 'bg-ignited' : ''}`}>
+      <HeartNeon
+        onActivated={() => setShowContent(true)}
+        onIgnite={() => setIsIgnited(true)}
+      />
 
       <main className={`main-content ${showContent ? 'visible' : ''}`}>
         <header>
